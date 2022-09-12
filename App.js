@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import type {Node} from 'react';
 import {
   SafeAreaView,
@@ -16,6 +16,7 @@ import {
   Text,
   useColorScheme,
   View,
+  NativeModules,
 } from 'react-native';
 
 import {
@@ -25,6 +26,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import * as ScreenCapture from 'expo-screen-capture';
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -53,6 +56,15 @@ const Section = ({children, title}): Node => {
 };
 
 const App: () => Node = () => {
+  useEffect(() => {
+    console.log('Native Modules: ', NativeModules);
+
+    const sub = ScreenCapture.addScreenshotListener(() => {
+      console.log('Screenshot Taken');
+    });
+
+    return () => sub.remove();
+  }, []);
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
