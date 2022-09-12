@@ -61,6 +61,7 @@ const App: () => Node = () => {
 
     const sub = ScreenCapture.addScreenshotListener(() => {
       console.log('Screenshot Taken');
+      alert('Screenshot Taken');
     });
 
     return () => sub.remove();
